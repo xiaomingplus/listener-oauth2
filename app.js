@@ -30,12 +30,7 @@ router.all('*',async function (ctx, next) {
   await next();
 });
 
-router.get('/authorize',async (ctx)=>{
-  await send(ctx,'./static/authorize.html');
-});
-
 router.get('/oauth2',auth,(ctx) => {
-  // ctx.body =  config.redisPrefix;
   ctx.body = ctx.headers;
 });
 router.post('/oauth2/decision',auth,oauth.postDecision);

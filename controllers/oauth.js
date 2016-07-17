@@ -15,6 +15,7 @@ oauth.refresh = function(ctx,next){
 oauth.token =async function(ctx,next){
   const code = ctx.checkBody('code').notEmpty().value;
   try{
+    console.log('key:'+config.redisPrefix.common.code+config.redisPrefix.common.channel+ctx.channel_id+":"+config.redisPrefix.common.code+code);
     var codeInfo = await redisConn.hgetall(config.redisPrefix.common.code+config.redisPrefix.common.channel+ctx.channel_id+":"+config.redisPrefix.common.code+code);
   }catch(e){
     ctx.status = 500;
@@ -26,6 +27,7 @@ oauth.token =async function(ctx,next){
     };
     return;
   }
+  console.log(codeInfo);
 
   if(isObjectEmpty(codeInfo)){
     ctx.status = 404;
